@@ -9,19 +9,34 @@ import GalleryTab from "./gallery-tab";
 
 interface GalleryProps {
   images: Image[];
+  modalIsViewed: boolean;
 }
 
 const Gallery: React.FC<GalleryProps> = ({
-  images = []
+  images = [],
+  modalIsViewed = false,
 }) => {
-  return ( 
-    <Tab.Group as="div" className="flex flex-col-reverse">
+  return (
+    <Tab.Group as="div" className="flex flex-col-reverse ">
       <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
-        <Tab.List className="grid grid-cols-4 gap-6">
-          {images.map((image) => (
-            <GalleryTab key={image.id} image={image} />
-          ))}
-        </Tab.List>
+        {modalIsViewed ? (
+          <Tab.List className="grid grid-cols-4 gap-6">
+            {images.map((image) => (
+              <GalleryTab key={image.id} image={image} />
+            ))}
+          </Tab.List>
+        ) : (
+          <Tab.List
+            className="grid grid-cols-4 gap-6  "
+            onClick={() =>
+              window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+            }
+          >
+            {images.map((image) => (
+              <GalleryTab key={image.id} image={image} />
+            ))}
+          </Tab.List>
+        )}
       </div>
       <Tab.Panels className="aspect-square w-full">
         {images.map((image) => (
@@ -31,7 +46,7 @@ const Gallery: React.FC<GalleryProps> = ({
                 fill
                 src={image.url}
                 alt="Image"
-                className="object-cover object-center"
+                className="object-contain object-center"
               />
             </div>
           </Tab.Panel>
@@ -39,6 +54,6 @@ const Gallery: React.FC<GalleryProps> = ({
       </Tab.Panels>
     </Tab.Group>
   );
-}
- 
+};
+
 export default Gallery;

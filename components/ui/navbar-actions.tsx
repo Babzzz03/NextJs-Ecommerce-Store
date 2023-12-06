@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 
 
 // import useCart from "@/hooks/use-cart";
+
+import useCart from "@/hooks/use-cart";
 import Button from "./Button";
 
 
@@ -17,7 +19,7 @@ const NavbarActions = () => {
   }, []);
 
   const router = useRouter();
-  // const cart = useCart();
+  const cart = useCart();
 
   if (!isMounted) {
     return null;
@@ -31,7 +33,7 @@ const NavbarActions = () => {
           color="white"
         />
         <span className="ml-2 text-sm font-medium text-white">
-          3
+          {cart.items.length}
         </span>
       </Button>
     </div>
